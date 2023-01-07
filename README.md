@@ -1,2 +1,2 @@
-# grpc_example
-GRPC example
+# gRPC_example
+gRPC example
