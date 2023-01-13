@@ -1,0 +1,5 @@
+grpcio
+grpcio-tools
+uvicorn
+fastapi==0.88.0
+piccolo[sqlite]

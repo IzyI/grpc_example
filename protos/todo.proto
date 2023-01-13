@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package todo;
+
+message Todo {
+  uint64 id = 1;
+  string name = 2;
+  bool completed = 3;
+  uint64 day = 4;
+}
+
+message CreateTodoRequest {
+  string name = 1;
+  bool completed = 2;
+  uint64 day = 3;
+}
+
+message CreateTodoResponse {
+  Todo todo = 1;
+}
+
+message ReadTodoRequest {
+  uint64 id = 1;
+}
+
+message ReadTodoResponse {
+  Todo todo = 1;
+}
+
+message UpdateTodoRequest {
+  uint64 id = 1;
+  string name = 2;
+  bool completed = 3;
+}
+
+message UpdateTodoResponse {
+  Todo todo = 1;
+}
+
+message DeleteTodoRequest {
+  uint64 id = 1;
+}
+
+message DeleteTodoResponse {
+  bool success = 1;
+}
+
+message ListTodosRequest {}
+
+message ListTodosResponse {
+  repeated Todo todos = 1;
+}
+
+
+
+service TodoService {
+  rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse);
+  rpc ReadTodo(ReadTodoRequest) returns (ReadTodoResponse);
+  rpc UpdateTodo(UpdateTodoRequest) returns (UpdateTodoResponse);
+  rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
+  rpc ListTodos(ListTodosRequest) returns (ListTodosResponse);
+}
