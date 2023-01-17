@@ -1,3 +1,4 @@
+from protos import approver_pb2 as _approver_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -42,6 +43,14 @@ class ListTodosResponse(_message.Message):
     TODOS_FIELD_NUMBER: _ClassVar[int]
     todos: _containers.RepeatedCompositeFieldContainer[Todo]
     def __init__(self, todos: _Optional[_Iterable[_Union[Todo, _Mapping]]] = ...) -> None: ...
+
+class ReadTodoApproverResponse(_message.Message):
+    __slots__ = ["approver", "todo"]
+    APPROVER_FIELD_NUMBER: _ClassVar[int]
+    TODO_FIELD_NUMBER: _ClassVar[int]
+    approver: _approver_pb2.Approver
+    todo: Todo
+    def __init__(self, todo: _Optional[_Union[Todo, _Mapping]] = ..., approver: _Optional[_Union[_approver_pb2.Approver, _Mapping]] = ...) -> None: ...
 
 class ReadTodoRequest(_message.Message):
     __slots__ = ["id"]

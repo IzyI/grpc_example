@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package todo;
 
+import "protos/approver.proto";
+
 message Todo {
   uint64 id = 1;
   string name = 2;
@@ -24,7 +26,7 @@ message ReadTodoRequest {
 }
 
 message ReadTodoResponse {
-  Todo todo = 1;
+  optional Todo todo = 1;
 }
 
 message UpdateTodoRequest {
@@ -53,10 +55,20 @@ message ListTodosResponse {
 
 
 
+//----------------------------------------
+message ReadTodoApproverResponse {
+  optional Todo todo = 1;
+  optional approver.Approver approver = 2;
+}
+
+
+
 service TodoService {
   rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse);
   rpc ReadTodo(ReadTodoRequest) returns (ReadTodoResponse);
   rpc UpdateTodo(UpdateTodoRequest) returns (UpdateTodoResponse);
   rpc DeleteTodo(DeleteTodoRequest) returns (DeleteTodoResponse);
   rpc ListTodos(ListTodosRequest) returns (ListTodosResponse);
+    //----------------------------------------
+  rpc ReadTodoApprover(ReadTodoRequest) returns (ReadTodoApproverResponse);
 }

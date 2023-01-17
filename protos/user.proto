@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/empty.proto";
+
+
+message User {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message ReadUserResponse {
+  User user = 1;
+}
+
+service UserService {
+  rpc ReadUser(google.protobuf.Empty) returns (ReadUserResponse);
+}
