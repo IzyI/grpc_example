@@ -1,10 +1,10 @@
 # Simple gRPC example in python
 
-This simple gRPC server has a structure:  
+### This simple gRPC server has a structure:  
 fast-api --> todo --> aprover   
 fast-api --> user  
 
-The service includes examples:
+### The service includes examples:
 - health-check
 - Token auth
 - Reflectin
@@ -15,10 +15,11 @@ The service includes examples:
 
 
 
-Command to generate interfaces from protobuf files:  
+### Command to generate interfaces from protobuf files:  
 python3 -m grpc_tools.protoc --python_out=. --grpc_python_out=. --pyi_out=. --proto_path=. ./protos/*.proto  
+
 ---
-Run services:
+### Run services:
 
 uvicorn api:app --host 0.0.0.0 --port 5000  
 python server_user_grpc.py  
@@ -26,7 +27,7 @@ python server_todo_grpc.py
 python server_approver_grpc.py  
 
 ---
-Example grpcurl for the project: 
+### Example grpcurl for the project: 
 
 grpcurl  -H 'rpc-auth:bsduyfwe7r23f556re23fdtcvwai' -plaintext 0.0.0.0:50053 list  
 
