@@ -10,6 +10,7 @@ The service includes examples:
 - Reflectin
 - The call chain (timeout, deadline)
 - Error handling
+- Tracing (opentelemetry)
 
 
 
