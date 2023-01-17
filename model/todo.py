@@ -1,6 +1,6 @@
-from piccolo.columns import Boolean, Varchar,Integer
+from piccolo.columns import Boolean, Varchar, Integer
 from piccolo.engine.sqlite import SQLiteEngine
-from piccolo.table import Table, create_tables
+from piccolo.table import Table
 
 DB = SQLiteEngine("bd.sqlite")
 

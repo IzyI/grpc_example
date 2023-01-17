@@ -39,6 +39,11 @@ class TodoServiceStub(object):
                 request_serializer=protos_dot_todo__pb2.ListTodosRequest.SerializeToString,
                 response_deserializer=protos_dot_todo__pb2.ListTodosResponse.FromString,
                 )
+        self.ReadTodoApprover = channel.unary_unary(
+                '/todo.TodoService/ReadTodoApprover',
+                request_serializer=protos_dot_todo__pb2.ReadTodoRequest.SerializeToString,
+                response_deserializer=protos_dot_todo__pb2.ReadTodoApproverResponse.FromString,
+                )
 
 
 class TodoServiceServicer(object):
@@ -74,6 +79,13 @@ class TodoServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ReadTodoApprover(self, request, context):
+        """----------------------------------------
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TodoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -101,6 +113,11 @@ def add_TodoServiceServicer_to_server(servicer, server):
                     servicer.ListTodos,
                     request_deserializer=protos_dot_todo__pb2.ListTodosRequest.FromString,
                     response_serializer=protos_dot_todo__pb2.ListTodosResponse.SerializeToString,
+            ),
+            'ReadTodoApprover': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReadTodoApprover,
+                    request_deserializer=protos_dot_todo__pb2.ReadTodoRequest.FromString,
+                    response_serializer=protos_dot_todo__pb2.ReadTodoApproverResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -194,5 +211,22 @@ class TodoService(object):
         return grpc.experimental.unary_unary(request, target, '/todo.TodoService/ListTodos',
             protos_dot_todo__pb2.ListTodosRequest.SerializeToString,
             protos_dot_todo__pb2.ListTodosResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReadTodoApprover(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/todo.TodoService/ReadTodoApprover',
+            protos_dot_todo__pb2.ReadTodoRequest.SerializeToString,
+            protos_dot_todo__pb2.ReadTodoApproverResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

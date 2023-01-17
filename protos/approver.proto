@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package approver;
+
+import "google/protobuf/wrappers.proto";
+
+message Approver {
+  google.protobuf.BoolValue status = 1;
+}
+
+message ReadApproverRequest {
+  int32 day = 1;
+}
+
+message ReadApproverResponse {
+  Approver approver = 1;
+}
+
+service ApproverService {
+  rpc ReadApprover(ReadApproverRequest) returns (ReadApproverResponse);
+}
