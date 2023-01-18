@@ -4,9 +4,15 @@ from protos import user_pb2_grpc
 from grpc_reflection.v1alpha import reflection
 from utils import AuthInterceptor
 
-
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
+
+from opentelemetry import trace
+from opentelemetry.instrumentation.grpc import GrpcAioInstrumentorServer
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.jaeger.proto.grpc import JaegerExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 
 
 class UserService(user_pb2_grpc.UserServiceServicer):
@@ -26,9 +32,21 @@ class UserService(user_pb2_grpc.UserServiceServicer):
 
 
 async def start(
-    addr,
-    token,
+        addr,
+        token,
+        jaeger_addr
 ):
+    jaeger_exporter = JaegerExporter(
+        collector_endpoint=jaeger_addr, insecure=True
+    )
+    span_processor = BatchSpanProcessor(jaeger_exporter)
+    trace.set_tracer_provider(
+        TracerProvider(resource=Resource.create({SERVICE_NAME: "User"}))
+    )
+    trace.get_tracer_provider().add_span_processor(span_processor)
+    grpc_server_instrumentor = GrpcAioInstrumentorServer()
+    grpc_server_instrumentor.instrument()
+
     server = aio.server(
         interceptors=[
             AuthInterceptor(token),
