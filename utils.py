@@ -6,8 +6,8 @@ class AuthInterceptor(grpc.aio.ServerInterceptor):
     def __init__(self, key):
         self._valid_metadata = ("rpc-auth", key)
 
-        def deny(_, context):
-            context.abort(grpc.StatusCode.UNKNOWN, "nani omae wa mou shindeiru")
+        async def deny(_, context):
+            await context.abort(grpc.StatusCode.UNAUTHENTICATED, "nani omae wa mou shindeiru")
 
         self._deny = grpc.unary_unary_rpc_method_handler(deny)
 

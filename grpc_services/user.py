@@ -20,12 +20,12 @@ class UserService(user_pb2_grpc.UserServiceServicer):
         print("ReadUser")
         return user_pb2.ReadUserResponse(user={"id": 1, "name": "KAPER_IT"})
 
-    def Check(self, request, context):
+    async def Check(self, request, context):
         return health_pb2.HealthCheckResponse(
             status=health_pb2.HealthCheckResponse.SERVING
         )
 
-    def Watch(self, request, context):
+    async def Watch(self, request, context):
         return health_pb2.HealthCheckResponse(
             status=health_pb2.HealthCheckResponse.UNIMPLEMENTED
         )

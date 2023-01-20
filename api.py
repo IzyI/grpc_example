@@ -1,5 +1,5 @@
 import typing as t
-from fastapi import Depends, FastAPI, status, HTTPException, Security
+from fastapi import Depends, FastAPI, status, HTTPException, Security,Query
 from fastapi.security.api_key import APIKeyHeader
 from fastapi.responses import JSONResponse
 from clients import grpc_todo_client, grpc_user_client
@@ -45,7 +45,7 @@ async def single_todo(
 async def create_todo(
     name: str,
     completed: bool,
-    day: int,
+    day: int= Query(ge=1),
     client: t.Any = Depends(grpc_todo_client),
 ) -> JSONResponse:
     try:

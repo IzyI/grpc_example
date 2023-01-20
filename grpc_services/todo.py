@@ -1,3 +1,5 @@
+import asyncio
+
 from grpc import aio, StatusCode
 
 from protos import todo_pb2
@@ -61,15 +63,21 @@ class TodoService(todo_pb2_grpc.TodoServiceServicer):
 
     async def ReadTodoApprover(self, request, context):
         todo = await Todo.select().where(Todo.id == request.id).first()
-        client = await grpc_approver_client()
-        print(context.time_remaining())
-        # time.sleep(5)
-        print(context.time_remaining())
+
+        # ------------------------------------------
+        print(f't1 {context.time_remaining()}')
+        # await asyncio.sleep(1)
+        print(f't2 {context.time_remaining()}')
+        # ------------------------------------------
+
         if todo:
+            client = await grpc_approver_client()
             req = await client.ReadApprover(
                 approver_pb2.ReadApproverRequest(day=todo["day"]),
                 timeout=context.time_remaining(),
             )
+
+
             return todo_pb2.ReadTodoApproverResponse(todo=todo, approver=req.approver)
         else:
             return todo_pb2.ReadTodoApproverResponse(todo=None, approver=None)
