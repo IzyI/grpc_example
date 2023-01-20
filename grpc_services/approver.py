@@ -4,7 +4,7 @@ from protos import approver_pb2
 from protos import approver_pb2_grpc
 
 from google.protobuf import wrappers_pb2 as _wrappers_pb2
-
+import asyncio
 from opentelemetry import trace
 from opentelemetry.instrumentation.grpc import GrpcAioInstrumentorServer
 from opentelemetry.sdk.trace import TracerProvider
@@ -19,9 +19,13 @@ class ApproverService(approver_pb2_grpc.ApproverServiceServicer):
     # all todos
     async def ReadApprover(self, request, context):
         print("ReadApprover")
-        print(request, context.time_remaining())
-        # time.sleep(5)
-        print(request, context.time_remaining())
+
+        # ------------------------------------------
+        print(f't1 {context.time_remaining()}')
+        # await asyncio.sleep(1)
+        print(f't2 {context.time_remaining()}')
+        # ------------------------------------------
+
         if request.day in WORK_DAY:
             status = True
         else:
